@@ -112,8 +112,6 @@ avNNet.default <- function(x, y, repeats = 5,
     requireNamespaceQuietStop("nnet")
     ## check for factors
     ## this is from nnet.formula
-
-    ind <- seq(along = y)
     if(is.factor(y))
       {
         classLev <- levels(y)
@@ -137,7 +135,8 @@ avNNet.default <- function(x, y, repeats = 5,
           if(theDots$trace) cat("\nFitting Repeat", i, "\n\n")
         } else cat("Fitting Repeat", i, "\n\n")
       set.seed(as.integer(seeds[i]))
-      if(bag)  ind <- sample(1:nrow(x), replace = TRUE)
+      ind <- seq_along(y)
+      if (bag) ind <- sample(ind, replace = TRUE)
       thisMod <- if(is.null(classLev)) nnet::nnet(x[ind,,drop = FALSE], y[ind], ...) else nnet::nnet(x[ind,,drop = FALSE], y[ind,], ...)
       thisMod$lev <- classLev
       thisMod
