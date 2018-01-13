@@ -129,6 +129,8 @@ avNNet.default <- function(x, y, repeats = 5,
     `%op%` <-  if(allowParallel)  `%dopar%` else  `%do%`
      mods <- foreach(i = 1:repeats,
                      .verbose = FALSE,
+                     .export = c("x", "y", "seeds", "ind", "bag", "classLev",
+                                 "theDots", "..."),
                      .packages = "caret",
                      .errorhandling = "stop") %op%
     {
